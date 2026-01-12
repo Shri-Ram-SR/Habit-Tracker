@@ -8,14 +8,12 @@ public class HabitPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI Txt_Desc;
     [SerializeField] Image Img_Button;
 
-    [SerializeField] Sprite Unticked;
-    [SerializeField] Sprite Ticked;
     int Index;
     string Name;
     string Description;
     bool Completed;
 
-    public void Setup(string name,string desc,int ind,bool b)
+    public void Setup(string name,string desc,int ind,bool b,ColorCombination cc)
     {
         Index = ind;
         Name = name;
@@ -23,13 +21,19 @@ public class HabitPanel : MonoBehaviour
 
         Txt_Name.text = Name;
         Txt_Desc.text = Description;
-        Img_Button.sprite = Unticked;
+        Img_Button.sprite = SpriteManager.Instance.GetUnTicked();
         if (b)
         {
             Txt_Name.text = "<s>" + Name + "<s>";
-            Txt_Desc.enabled = false;
-            Img_Button.sprite = Ticked;
+            Txt_Desc.text = "<s>" + Description + "<s>";
+            Img_Button.sprite = SpriteManager.Instance.GetTicked();
         }
+
+        //Assigning Colors
+        Img_Button.color = cc.InfoColor;    
+        Txt_Desc.color = cc.InfoColor;
+        Txt_Name.color = cc.InfoColor;
+        GetComponent<Image>().color = cc.BgColor;
     }
     public void SetIndex(int i)
     {
@@ -41,14 +45,14 @@ public class HabitPanel : MonoBehaviour
         if (Completed)
         {
             Txt_Name.text = "<s>" + Name + "<s>";
-            Txt_Desc.enabled = false;
-            Img_Button.sprite = Ticked;
+            Txt_Desc.text = "<s>" + Description + "<s>";
+            Img_Button.sprite = SpriteManager.Instance.GetTicked();
         }
         else
         {
             Txt_Name.text = Name;
-            Txt_Desc.enabled = true;
-            Img_Button.sprite = Unticked;
+            Txt_Desc.text = Description;
+            Img_Button.sprite = SpriteManager.Instance.GetUnTicked();
         }
         HabitManager.instance.SetComplete(Completed, Index);
     }

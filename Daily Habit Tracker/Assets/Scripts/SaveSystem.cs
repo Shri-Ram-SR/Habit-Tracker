@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 public static class SaveSystem
 {
-    public static void SaveData(List<HabitInfo> h)
+    public static void SaveData(List<HabitInfo> h,string n)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/Habits.hb";
 
         using (FileStream stream = new FileStream(path, FileMode.Create))
         {
-            PlayerHabitsData data = new PlayerHabitsData(h);
+            PlayerData data = new PlayerData(h,n);
             formatter.Serialize(stream, data);
         }
     }
 
-    public static List<HabitInfo> LoadData()
+    public static PlayerData LoadData()
     {
         string path = Application.persistentDataPath + "/Habits.hb";
         if (File.Exists(path))
@@ -26,9 +26,9 @@ public static class SaveSystem
 
             using (FileStream stream = new FileStream(path, FileMode.Open))
             {
-                PlayerHabitsData data = formatter.Deserialize(stream) as PlayerHabitsData;
+                PlayerData data = formatter.Deserialize(stream) as PlayerData;
 
-                return data.AllHabits;
+                return data;
             }
         }
         else

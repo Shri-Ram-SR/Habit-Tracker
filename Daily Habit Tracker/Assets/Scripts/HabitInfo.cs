@@ -8,12 +8,14 @@ public class HabitInfo
     public string Description;
     public int Points;
     public List<bool> Completion;
-    public HabitInfo(string habitName, string description, int points)
+    public string cc;
+    public HabitInfo(string habitName, string description, int points,string n)
     {
         HabitName = habitName;
         Description = description;
         Points = points;
         Completion = new List<bool>();
+        cc = n;
     }
     public int GetPoints()
     {
